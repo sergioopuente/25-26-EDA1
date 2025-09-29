@@ -7,10 +7,10 @@
 ### 29 sept
 
 - La necesidad de una estructura de datos **no determinista** sino más bien estructuras que permitan conexiones dinámicas.
-- El concepto de orden como elemento externo a la estructura de datos, dado que es una interpretación, no una realidad física.
-- Las estructuras de datos como sistemas de direccionamiento en memoria: los datos permanecen inmóviles, solo manipulamos referencias entre ellos.
-- El agrupamiento mediante conexiones: los elementos pueden organizarse sin necesidad de contenedores externos (arrays), simplemente manteniendo referencias entre sí.
-- Y, dicho esto, la responsabilidad de saber quién sigue, que origina el concepto de NODO
+- El concepto de **orden como elemento externo a la estructura de datos**, dado que es una interpretación, no una realidad física.
+- Las estructuras de datos como **sistemas de direccionamiento en memoria**: los datos permanecen inmóviles, solo manipulamos referencias entre ellos.
+- El agrupamiento mediante conexiones: los elementos pueden organizarse sin necesidad de contenedores externos (arrays), simplemente **manteniendo referencias entre sí**.
+- Y, dicho esto, la **responsabilidad de saber quién sigue**, que origina el concepto de NODO
 
 ### 26 sept
 
