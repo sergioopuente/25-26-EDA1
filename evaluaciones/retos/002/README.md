@@ -1,0 +1,3 @@
+# Reto 002
+
+En la ludoteca, Aisha tiene a los niños ya organizados... 
