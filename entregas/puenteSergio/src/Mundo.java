@@ -1,4 +1,3 @@
-
 public class Mundo {
     private Ludoteca ludoteca;
     private int tiempoTotal;
@@ -21,7 +20,6 @@ public class Mundo {
                 ludoteca.simularLlegadaNiño(); 
             }
 
-           
             ludoteca.simularInicioJuego();
             ludoteca.mostrarMonitoresYNiños();
 
@@ -36,7 +34,7 @@ public class Mundo {
     private Nino generarNiño() {
         String unNombre = inventarNombre();
         new Console().writeln("Llega " + unNombre);
-        return new Nino(unNombre, 3 + (int) (Math.random() * 6)); 
+        return new Nino(unNombre, 3 + (int) (Math.random() * 6)); // edad 3-8
     }
 
     private String inventarNombre() {

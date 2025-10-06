@@ -25,7 +25,7 @@ class Monitor {
             niños[uso++] = n;
             n.recibirPizarrin(new Pizarra());
         } else {
-            new Console().writeln("La cola de " + nombre + " está llena. No se puede añadir a " + n.getNombre());
+            System.out.println("La cola de " + nombre + " está llena. No se puede añadir a " + n.getNombre());
         }
     }
 
@@ -44,19 +44,19 @@ class Monitor {
     public void jugar() {
         if (!puedeJugar() || jugando) return;
         jugando = true;
-        new Console().writeln(nombre + " empieza a jugar con " + uso + " niños.");
+        System.out.println(nombre + " empieza a jugar con " + uso + " niños.");
         for (int i = 0; i < uso; i++) {
             Nino n = niños[i];
             n.recibirMensaje("Vamos a jugar");
         }
-        new Console().writeln(nombre + " ha terminado el juego.");
+        System.out.println(nombre + " ha terminado el juego.");
         jugando = false;
     }
 
     public void mostrarListaNiños() {
-        new Console().writeln(nombre + " (niños: " + uso + "):");
+        System.out.println(nombre + " (niños: " + uso + "):");
         for (int i = 0; i < uso; i++) {
-            new Console().writeln(" - " + niños[i].getNombre());
+            System.out.println(" - " + niños[i].getNombre());
         }
     }
 
