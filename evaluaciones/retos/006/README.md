@@ -30,20 +30,46 @@ Implementar una versión de edlin, que permita gestionar ficheros de texto.
 
 ## Propuestas de interfaz
 
+### Inicio de programa
+
+```console
+
+c:\> edlin autoexec.bat
+- Indique nombre de usuario: Manuel
+
+```
+
+### Gestión habitual
+
 ```console
 EDLIN - Archivo: autoexec.bat - Editando: Manuel
 ==============================================================
- 1 :  echo off
- 2 :  path = c:\windows;c:\windows\system
- 3 :  cleanConsole.bat
- 4*:  cls
- 5 :
- 6 : 
- 7 :
- 8 :
- 9 :
+ 1 : EDLIN es un editor de líneas incluido
+ 2 : en MS-DOS y más tarde en los sistemas
+ 3 : operativos Microsoft. Proporciona capacidades 
+ 4*: rudimentarias para editar ficheros de 
+ 5 : texto plano a través de una interfaz 
+ 6 : de comandos. Los números de línea son  
+ 7 : especificados usando números, y las 
+ 8 : operaciones son especificadas usando 
+ 9 : un sólo carácter alfabético.
 10 :
 ==============================================================
 [L]ínea activa: 4 / [E]ditar / e[L]iminar / [I]ntercambiar
 [D]eshacer / [R]ehacer / [V]ersiones
+```
+
+### Gestión de versiones
+
+```console
+Archivo: autoexec.bat
+
+Version - Autor - Fecha
+==============================================================
+1         Manuel   12/05/2025 12:25:05h
+2         Carlos   13/05/2025 15:30:00h
+3         Agustín  13/05/2025 16:30:00h
+4 *       Manuel   14/05/2025 18:30:00h 
+==============================================================
+Versión activa: 4 / [V]olver a una versión anterior
 ```
