@@ -21,10 +21,29 @@ Implementar una versión de edlin, que permita gestionar ficheros de texto.
 1. Agregue a su versión de edlin la capacidad de eliminar el contenido de una línea.
 1. Agregue a su versión de edlin la capacidad de intercambiar el contenido de dos líneas.
 
-### MEJORAS – PARTE 1
+### RETOS EXTRA
 
 - Agregue a su versión de edlin la capacidad de albergar metadatos.
 - En base a lo definido arriba, plantee como implementaría la opción de deshacer (CTRL+Z) y rehacer (CTRL+Y).
 - Agregue a su edlin la capacidad de guardar versiones del documento, dentro del mismo documento (de modo similar a lo que propone Google Docs).
 - Una vez implementada la gesión de versiones, agregue a su edlin la capacidad de permitir la gestión colaborativa, es decir, saber qué usuario editó cada versión del mismo.
 
+## Propuestas de interfaz
+
+```console
+EDLIN - Archivo: autoexec.bat - Editando: Manuel
+==============================================================
+ 1 :  echo off
+ 2 :  path = c:\windows;c:\windows\system
+ 3 :  cleanConsole.bat
+ 4*:  cls
+ 5 :
+ 6 : 
+ 7 :
+ 8 :
+ 9 :
+10 :
+==============================================================
+[L]ínea activa: 4 / [E]ditar / e[L]iminar / [I]ntercambiar
+[D]eshacer / [R]ehacer / [V]ersiones
+```
