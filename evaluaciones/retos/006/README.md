@@ -10,7 +10,9 @@ Edlin fue creado por Tim Paterson en dos semanas en 1980, y se esperaba que tuvi
 
 ## RETO
 
-Implementar una versión de edlin, que permita gestionar ficheros de texto.
+Implementar una versión de edlin, que permita gestionar ficheros.
+
+> NOTA: Aunque los ficheros que gestiona esta versión de edlin son ficheros de texto, es probable que haga falta un formato específico para su almacenamiento.
 
 ### RETOS BASE
 
@@ -34,7 +36,7 @@ Implementar una versión de edlin, que permita gestionar ficheros de texto.
 
 ```console
 
-c:\> edlin autoexec.bat
+c:\> edlin edlin.eln
 - Indique nombre de usuario: Manuel
 
 ```
@@ -42,7 +44,7 @@ c:\> edlin autoexec.bat
 ### Gestión habitual
 
 ```console
-EDLIN - Archivo: autoexec.bat - Editando: Manuel
+EDLIN - Archivo: edlin.eln - Editando: Manuel
 ==============================================================
  1 : EDLIN es un editor de líneas incluido
  2 : en MS-DOS y más tarde en los sistemas
