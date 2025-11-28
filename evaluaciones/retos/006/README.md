@@ -19,10 +19,10 @@ Implementar una versión de edlin, que permita gestionar ficheros de texto.
 1. Agregue a su versión de edlin la capacidad de especificar la línea activa.
 1. Agregue a su versión de edlin la capacidad de editar el contenido de la línea activa.
 1. Agregue a su versión de edlin la capacidad de eliminar el contenido de una línea.
+1. Agregue a su versión de edlin la capacidad de intercambiar el contenido de dos líneas.
 
 ### MEJORAS – PARTE 1
 
-- Agregue a su versión de edlin la capacidad de intercambiar el contenido de dos líneas.
 - Agregue a su versión de edlin la capacidad de albergar metadatos.
 - En base a lo definido arriba, plantee como implementaría la opción de deshacer (CTRL+Z) y rehacer (CTRL+Y).
 - Agregue a su edlin la capacidad de guardar versiones del documento, dentro del mismo documento (de modo similar a lo que propone Google Docs).
