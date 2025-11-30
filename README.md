@@ -27,6 +27,33 @@ El proyecto sigue estrictamente el paradigma de **Programación Orientada a Obje
 1.  **Menor Tiempo Restante:** El pedido que requiera menos tiempo para finalizar tiene prioridad absoluta.
 2.  **Orden de Llegada (FIFO):** En caso de empate en tiempo, se prioriza el pedido más antiguo (menor ID).
 
+### 3. `Pedido` 
+* **Responsabilidad:** Representar la entidad y su prioridad.
+* **Implementación Técnica:**
+    * Implementa `Comparable<Pedido>` para definir el criterio **SJF** (Shortest Job First).
+    * Encapsula estado mutable (`tiempoRestante`) e inmutable (`id`, `tipo`, `tiempoLlegada`).
+
+---
+
+## ⚖️ Lógica de Prioridad (SJF)
+
+El criterio de ordenación se define en el método `compareTo`. La prioridad se establece por:
+
+1.  **Menor Tiempo Restante:** El pedido que requiera menos tiempo para finalizar tiene prioridad absoluta.
+2.  **Orden de Llegada (FIFO):** En caso de empate en tiempo, se prioriza el pedido más antiguo (menor ID).
+
+```java
+@Override
+public int compareTo(Pedido otro) {
+    
+    int comparacionTiempo = Integer.compare(this.tiempoRestante, otro.tiempoRestante);
+    if (comparacionTiempo != 0) {
+        return comparacionTiempo;
+    }
+    
+    return Integer.compare(this.id, otro.id);
+}
+
 ```java
 @Override
 public int compareTo(Pedido otro) {
