@@ -1,104 +1,43 @@
-# ☕ Reto RCCCF: Simulación de Cocina Optimizada (Shortest Job First)
+# Simulación de Restaurante (Refactorización RCCCF)
 
-## 📌 Notas  a tener en cuenta: Eficiencia y Estructuras de Datos
+Este proyecto implementa una simulación de la gestión de pedidos en un restaurante, refactorizada para seguir un diseño orientado a objetos minimalista y purista, evitando el uso de colecciones complejas de Java en favor de estructuras de datos propias.
 
-Este ejercicio demuestra la importancia crítica de la selección de estructuras de datos para la **eficiencia del sistema**.
+## Descripción del Reto
 
-* **El Problema:** El sistema requiere extraer continuamente el elemento mínimo (pedido más rápido) de una colección dinámica.
-* **La Solución:** Se descarta el uso de listas (`ArrayList`) por su ineficiencia en búsqueda ($O(n)$) y se implementa una **`PriorityQueue`** basada en un **Min-Heap**.
-* **El Resultado:** Las operaciones de inserción y extracción se optimizan a un coste logarítmico **$O(\log n)$**.
+El objetivo principal ha sido refactorizar una implementación anterior basada en `PriorityQueue` para utilizar un **Árbol Binario de Búsqueda (BST)** personalizado para la gestión de la prioridad de los pedidos (SJF - Shortest Job First).
 
-> **Métrica de Control:** El sistema implementa un `Comparator` personalizado que intercepta y cuenta las comparaciones realizadas por el algoritmo de ordenación, permitiendo validar empíricamente la eficiencia de la solución.
+## Estructura del Proyecto
 
----
+El código fuente se encuentra en la carpeta `src` y consta de las siguientes clases:
 
-## 🏗️ Arquitectura 
+*   **`SimulacionRCCCF.java`**: Clase principal que contiene el `main`. Ejecuta el bucle de simulación, genera pedidos aleatorios y muestra el estado del sistema paso a paso.
+*   **`Restaurante.java`**: Representa el sistema de cocina. Gestiona la cola de pedidos y el procesamiento del pedido actual.
+*   **`ArbolPedidos.java`**: Estructura de datos personalizada (BST) que sustituye a la cola de prioridad. Almacena los pedidos ordenados por tiempo de preparación.
+*   **`Nodo.java`**: Clase auxiliar que representa un nodo dentro del árbol de pedidos.
+*   **`Pedido.java`**: Modelo de datos que representa un pedido con su tipo, tiempo de preparación y tiempo de llegada.
 
-El proyecto sigue estrictamente el paradigma de **Programación Orientada a Objetos**, priorizando el encapsulamiento, la modularidad y el diseño descendente.
+## Diagrama de Clases
 
-### 1. `Main` 
-* **Responsabilidad:** Control del flujo temporal de la simulación.
-* **Características:**
-    * Bucle principal limpio (`for` de 1 a 480 minutos).
-    * Uso de **constantes** (`final static`) para evitar *números mágicos* (duración, probabilidades).
-    * Delegación total de la lógica de negocio a la clase `Cocina`.
+La arquitectura sigue el siguiente esquema (ver `documentosUML/uml_rcccf.puml` para más detalles):
 
-### 2. `Cocina` 
-1.  **Menor Tiempo Restante:** El pedido que requiera menos tiempo para finalizar tiene prioridad absoluta.
-2.  **Orden de Llegada (FIFO):** En caso de empate en tiempo, se prioriza el pedido más antiguo (menor ID).
+`SimulacionRCCCF` -> `Restaurante` -> `ArbolPedidos` -> `Nodo` -> `Pedido`
 
-### 3. `Pedido` 
-* **Responsabilidad:** Representar la entidad y su prioridad.
-* **Implementación Técnica:**
-    * Implementa `Comparable<Pedido>` para definir el criterio **SJF** (Shortest Job First).
-    * Encapsula estado mutable (`tiempoRestante`) e inmutable (`id`, `tipo`, `tiempoLlegada`).
+## Cómo Ejecutar
 
----
+1.  Navegar a la carpeta `src`:
+    ```bash
+    cd entregas/puenteSergio/src
+    ```
+2.  Compilar el código:
+    ```bash
+    javac -d . *.java
+    ```
+3.  Ejecutar la simulación:
+    ```bash
+    java entregas.puenteSergio.src.SimulacionRCCCF
+    ```
 
-## ⚖️ Lógica de Prioridad (SJF)
+## Detalles de Implementación
 
-El criterio de ordenación se define en el método `compareTo`. La prioridad se establece por:
-
-1.  **Menor Tiempo Restante:** El pedido que requiera menos tiempo para finalizar tiene prioridad absoluta.
-2.  **Orden de Llegada (FIFO):** En caso de empate en tiempo, se prioriza el pedido más antiguo (menor ID).
-
-```java
-@Override
-public int compareTo(Pedido otro) {
-    
-    int comparacionTiempo = Integer.compare(this.tiempoRestante, otro.tiempoRestante);
-    if (comparacionTiempo != 0) {
-        return comparacionTiempo;
-    }
-    
-    return Integer.compare(this.id, otro.id);
-}
-
-```java
-@Override
-public int compareTo(Pedido otro) {
-    
-    int comparacionTiempo = Integer.compare(this.tiempoRestante, otro.tiempoRestante);
-    if (comparacionTiempo != 0) {
-        return comparacionTiempo;
-    }
-   
-    return Integer.compare(this.id, otro.id);
-}
-## ⚙️ Parámetros de la Simulación
-
-| Parámetro | Valor | Descripción |
-| :--- | :--- | :--- |
-| **Duración** | `480` min | Jornada completa de 8 horas. |
-| **Probabilidad** | `0.4` | 40% de probabilidad de llegada por minuto. |
-
-### 🥗 Tipos de Plato y Distribución
-
-| Tipo de Plato | Rango de Tiempo (min) |
-| :--- | :--- |
-| **Bebida** | 1 - 2 |
-| **Café** | 2 - 3 |
-| **Colacao** | 2 - 4 |
-| **Bocadillo** | 3 - 5 |
-| **Ensalada** | 5 - 8 |
-
----
-
-## 📊 Métricas Finales (Salida)
-
-Al finalizar la ejecución, el sistema genera un informe detallado con indicadores de rendimiento (**KPIs**):
-
-* **Capacidad de Atención:** Relación entre el total de pedidos completados vs. los que quedaron pendientes.
-* **Calidad de Servicio:** Tiempo medio de espera por cliente (métrica crítica de satisfacción).
-* **Eficiencia Algorítmica:** Número total de comparaciones realizadas por el **Heap** (validador de la optimización).
-
-```text
-========================================
-RESUMEN DE LA JORNADA
-========================================
-Pedidos atendidos        : XX
-Pedidos pendientes       : YY
-Tiempo total de espera   : ZZ minutos
-Tiempo medio de espera   : AA.A minutos
-Comparaciones totales    : BB (Validación de eficiencia O(log n))
-========================================
+*   **Prioridad**: Los pedidos con menor tiempo de preparación se insertan a la izquierda en el árbol.
+*   **Extracción**: El método `eliminarMinimo()` del árbol busca y elimina el nodo más a la izquierda, garantizando que siempre se atienda el pedido más rápido disponible (SJF).
