@@ -36,7 +36,6 @@ public class ArbolPedidos {
         Nodo padre = null;
         Nodo actual = raiz;
 
-        // El mínimo en un BST está en el nodo más a la izquierda
         while (actual.getIzquierdo() != null) {
             padre = actual;
             actual = actual.getIzquierdo();
@@ -44,9 +43,7 @@ public class ArbolPedidos {
 
         Pedido pedidoMinimo = actual.getPedido();
 
-        // Eliminar el nodo
         if (padre == null) {
-            // El mínimo es la raíz
             raiz = actual.getDerecho();
         } else {
             padre.setIzquierdo(actual.getDerecho());

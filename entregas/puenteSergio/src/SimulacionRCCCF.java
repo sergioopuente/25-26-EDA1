@@ -87,10 +87,6 @@ public class SimulacionRCCCF {
                 : 0.0;
 
         System.out.printf("Tiempo medio de espera   : %.1f minutos\n", esperaMedia);
-        // Note: contadorComparaciones logic was removed as it was tied to the
-        // PriorityQueue comparator
-        // We could add it back to ArbolPedidos if needed, but for now we'll omit it or
-        // set to 0
         System.out.printf("Comparaciones totales    : %d\n", restaurant.getContadorComparaciones());
         System.out.println("========================================");
     }
