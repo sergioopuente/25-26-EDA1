@@ -1,4 +1,4 @@
-package entregas.apellidoNombre.src.rcccf;
+package entregas.puenteSergio.src;
 
 public class Pedido implements Comparable<Pedido> {
     private static int contadorId = 1;

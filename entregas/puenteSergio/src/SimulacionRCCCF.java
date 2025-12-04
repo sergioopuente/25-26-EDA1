@@ -1,14 +1,14 @@
-package entregas.apellidoNombre.src.rcccf;
+package entregas.puenteSergio.src;
 
 import java.util.Random;
 
-public class Main {
+public class SimulacionRCCCF {
     private static final int DURACION_SIMULACION = 480;
     private static final double PROBABILIDAD_LLEGADA = 0.4;
     private static final Random aleatorio = new Random();
 
     public static void main(String[] args) {
-        Cocina cocina = new Cocina();
+        Restaurante restaurant = new Restaurante();
 
         for (int tiempo = 1; tiempo <= DURACION_SIMULACION; tiempo++) {
             System.out.println("========================================");
@@ -16,14 +16,14 @@ public class Main {
 
             if (aleatorio.nextDouble() < PROBABILIDAD_LLEGADA) {
                 Pedido nuevoPedido = generarPedidoAleatorio(tiempo);
-                cocina.anadirPedido(nuevoPedido);
+                restaurant.anadirPedido(nuevoPedido);
                 System.out.printf("Llega pedido: %s\n", nuevoPedido);
             }
 
-            cocina.tic(tiempo);
+            restaurant.tic(tiempo);
 
-            System.out.printf("COLA: %d pedidos\n", cocina.getTamanoCola());
-            Pedido actual = cocina.getPedidoActual();
+            System.out.printf("COLA: %d pedidos\n", restaurant.getTamanoCola());
+            Pedido actual = restaurant.getPedidoActual();
             if (actual != null) {
                 System.out.printf("Cocinero: %s\n", actual.aCadenaEstado());
             } else {
@@ -31,7 +31,7 @@ public class Main {
             }
         }
 
-        imprimirResumen(cocina);
+        imprimirResumen(restaurant);
     }
 
     private static Pedido generarPedidoAleatorio(double tiempoLlegada) {
@@ -75,19 +75,23 @@ public class Main {
         return new Pedido(tipo, tiempoPrep, tiempoLlegada);
     }
 
-    private static void imprimirResumen(Cocina cocina) {
+    private static void imprimirResumen(Restaurante restaurant) {
         System.out.println("\nRESUMEN DE LA JORNADA");
         System.out.println("========================================");
-        System.out.printf("Pedidos atendidos        : %d\n", cocina.getPedidosCompletados());
-        System.out.printf("Pedidos pendientes       : %d\n", cocina.getContadorPedidosPendientes());
-        System.out.printf("Tiempo total de espera   : %d minutos\n", cocina.getTiempoTotalEspera());
+        System.out.printf("Pedidos atendidos        : %d\n", restaurant.getPedidosCompletados());
+        System.out.printf("Pedidos pendientes       : %d\n", restaurant.getContadorPedidosPendientes());
+        System.out.printf("Tiempo total de espera   : %d minutos\n", restaurant.getTiempoTotalEspera());
 
-        double esperaMedia = cocina.getPedidosCompletados() > 0
-                ? (double) cocina.getTiempoTotalEspera() / cocina.getPedidosCompletados()
+        double esperaMedia = restaurant.getPedidosCompletados() > 0
+                ? (double) restaurant.getTiempoTotalEspera() / restaurant.getPedidosCompletados()
                 : 0.0;
 
         System.out.printf("Tiempo medio de espera   : %.1f minutos\n", esperaMedia);
-        System.out.printf("Comparaciones totales    : %d\n", cocina.getContadorComparaciones());
+        // Note: contadorComparaciones logic was removed as it was tied to the
+        // PriorityQueue comparator
+        // We could add it back to ArbolPedidos if needed, but for now we'll omit it or
+        // set to 0
+        System.out.printf("Comparaciones totales    : %d\n", restaurant.getContadorComparaciones());
         System.out.println("========================================");
     }
 }

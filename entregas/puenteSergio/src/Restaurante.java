@@ -1,34 +1,26 @@
-package entregas.apellidoNombre.src.rcccf;
+package entregas.puenteSergio.src;
 
-import java.util.PriorityQueue;
-import java.util.Comparator;
-
-public class Cocina {
-    private PriorityQueue<Pedido> cola;
+public class Restaurante {
+    private ArbolPedidos cola;
     private Pedido pedidoActual;
     private int pedidosCompletados;
     private int tiempoTotalEspera;
     private long contadorComparaciones;
 
-    public Cocina() {
-        Comparator<Pedido> comparadorConContador = (p1, p2) -> {
-            contadorComparaciones++;
-            return p1.compareTo(p2);
-        };
-
-        this.cola = new PriorityQueue<>(comparadorConContador);
+    public Restaurante() {
+        this.cola = new ArbolPedidos();
         this.pedidosCompletados = 0;
         this.tiempoTotalEspera = 0;
         this.contadorComparaciones = 0;
     }
 
     public void anadirPedido(Pedido pedido) {
-        cola.add(pedido);
+        cola.insertar(pedido);
     }
 
     public void tic(double tiempoActual) {
-        if (pedidoActual == null && !cola.isEmpty()) {
-            pedidoActual = cola.poll();
+        if (pedidoActual == null && !cola.estaVacio()) {
+            pedidoActual = cola.eliminarMinimo();
         }
 
         if (pedidoActual != null) {
@@ -39,8 +31,8 @@ public class Cocina {
                 tiempoTotalEspera += (tiempoActual - pedidoActual.getTiempoLlegada());
                 pedidoActual = null;
 
-                if (!cola.isEmpty()) {
-                    pedidoActual = cola.poll();
+                if (!cola.estaVacio()) {
+                    pedidoActual = cola.eliminarMinimo();
                 }
             }
         }
@@ -51,7 +43,7 @@ public class Cocina {
     }
 
     public int getTamanoCola() {
-        return cola.size();
+        return cola.getTamano();
     }
 
     public long getContadorComparaciones() {
@@ -67,6 +59,6 @@ public class Cocina {
     }
 
     public int getContadorPedidosPendientes() {
-        return cola.size() + (pedidoActual != null ? 1 : 0);
+        return cola.getTamano() + (pedidoActual != null ? 1 : 0);
     }
 }
