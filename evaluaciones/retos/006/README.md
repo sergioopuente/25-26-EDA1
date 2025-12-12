@@ -16,8 +16,8 @@ Proponga las estructuras de datos que utilizaría para desarrollar esta solució
 1. **Justificación**: Para cada operación, explicar **qué** estructura soporta esa operación y **por qué**.
 1. **Compromisos**: Identificar de modo claro qué operaciones se sacrifican (si alguna) y el coste aceptado
 1. **Casos límite**: Describa cómo el diseño que propone maneja:
-  - Asignaturas sin alumnos suscritos
-  - Alumnos sin asignatura inscrita
-  - Exalumnos
-  - Mensajes que no provienen de una asignatura
-  - Mensajes no enviados
+    - Asignaturas sin alumnos suscritos
+    - Alumnos sin asignatura inscrita
+    - Exalumnos
+    - Mensajes que no provienen de una asignatura
+    - Mensajes no enviados
