@@ -1,0 +1,12 @@
+graph TD
+    Input[Entrada Mensaje] -->|Extraer Código| Iris{Sistema Iris}
+    Iris -->|Buscar Asignatura (BST, O log N)| Asig[Nodo Asignatura]
+    
+    subgraph Asignatura Node
+        Asig -->|Encolar| PQ[Cola de Prioridad (Heap)]
+        PQ -->|Desencolar (Mayor Prio)| Proc[Procesador IA]
+    end
+    
+    Proc -->|Resumen| Notif[Notificador]
+    Notif -->|Iterar Suscriptores (Lista)| Subs[Lista Enlazada Alumnos]
+    Subs -->|Fan-out| WA[API WhatsApp]

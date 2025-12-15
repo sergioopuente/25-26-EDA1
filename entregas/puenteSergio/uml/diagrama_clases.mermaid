@@ -1,0 +1,64 @@
+classDiagram
+    class SistemaIris {
+        +registrarAsignatura()
+        +inscribirAlumno()
+        +recibirMensaje()
+        +procesarMensajes()
+    }
+
+    class ArbolAsignaturas {
+        +insertar(Asignatura)
+        +buscar(codigo): Asignatura
+    }
+
+    class NodoArbol {
+        +Asignatura dato
+        +NodoArbol izquierdo
+        +NodoArbol derecho
+    }
+
+    class Asignatura {
+        -String codigo
+        -String nombre
+        +recibirMensaje(Mensaje)
+        +agregarSuscriptor(Alumno)
+    }
+
+    class ColaMensajes {
+        +encolar(Mensaje)
+        +desencolar(): Mensaje
+        -heapify()
+    }
+
+    class Mensaje {
+        -String contenido
+        -int prioridad
+        -long timestamp
+        +compareTo(Mensaje)
+    }
+
+    class ListaSuscriptores {
+        +insertar(Alumno)
+        +eliminar(id)
+        +iterar()
+    }
+
+    class NodoAlumno {
+        +Alumno dato
+        +NodoAlumno siguiente
+    }
+
+    class Alumno {
+        -String id
+        -String nombre
+        -String contacto
+    }
+
+    SistemaIris --> ArbolAsignaturas : usa
+    ArbolAsignaturas *-- NodoArbol : contiene
+    NodoArbol --> Asignatura : referencias
+    Asignatura *-- ColaMensajes : tiene
+    Asignatura *-- ListaSuscriptores : tiene
+    ColaMensajes o-- Mensaje : prioriza
+    ListaSuscriptores *-- NodoAlumno : enlaza
+    NodoAlumno --> Alumno : referencias
