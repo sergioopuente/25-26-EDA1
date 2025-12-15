@@ -1,6 +1,6 @@
 graph TD
     Input[Entrada Mensaje] -->|Extraer Código| Iris{Sistema Iris}
-    Iris -->|Buscar Asignatura (BST, O log N)| Asig[Nodo Asignatura]
+    Iris -->|"Buscar Asignatura (BST, O log N)"| Asig[Nodo Asignatura]
     
     subgraph Asignatura Node
         Asig -->|Encolar| PQ[Cola de Prioridad (Heap)]
