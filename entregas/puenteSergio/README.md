@@ -1,118 +1,53 @@
-# Reto 006: Estructuras de Datos para Iris
+# Reto 006: Planificación y Diseño del Sistema Iris
 
-Propuesta de diseño de estructuras de datos para el sistema **Iris**, un redirector de mensajes estructurados que captura envíos, los resume mediante IA y los notifica a los suscriptores vía WhatsApp.
+## 1. Introducción
+Este documento detalla las decisiones de diseño y la planificación estructural para el sistema **Iris**. El objetivo principal es construir un redirector de mensajes eficiente, capaz de manejar picos de tráfico y garantizar la entrega ordenada de información prioritaria.
 
-## 1. Diagramas UML
+## 2. Arquitectura de Estructuras de Datos
+Para cumplir con los requisitos exigenes de rendimiento, hemos evitado el uso de colecciones genéricas estándar en los puntos críticos, optando por estructuras de datos especializadas. La arquitectura se basa en tres pilares:
 
-### Diagrama de Clases (Estructuras de Datos)
+### A. Indexación de Asignaturas (Búsqueda Rápida)
+*   **Estructura**: Árbol Binario de Búsqueda (BST).
+*   **Decisión**: Necesitamos buscar una asignatura por su código (String) cada vez que llega un mensaje.
+*   **Justificación**: 
+    *   Un BST permite búsquedas en tiempo logarítmico **O(log N)** promedio.
+    *   Mantiene el catálogo ordenado alfabéticamente de forma natural, útil para listados administrativos.
+    *   Es superior a una lista simple O(N) y más flexible en memoria que una Tabla Hash estática para este contexto educativo.
 
-El sistema utiliza estructuras personalizadas para optimizar el rendimiento:
-- **BST (Árbol Binario)** para Búsqueda rápida de Asignaturas.
-- **Max-Heap (Cola Prioridad)** para gestión de Mensajes Urgentes.
-- **Linked List (Lista Enlazada)** para iteración de Suscriptores.
+### B. Gestión de Mensajes (Priorización)
+*   **Estructura**: Cola de Prioridad (Max-Heap).
+*   **Decisión**: Los mensajes tienen niveles de urgencia (Urgente > Importante > Informativo). No deben procesarse en estricto orden de llegada (FIFO), sino por importancia.
+*   **Justificación**:
+    *   Un Heap garantiza que el mensaje de mayor prioridad esté siempre disponible en la raíz en **O(1)**.
+    *   La inserción y extracción cuestan **O(log M)**, lo cual es muy eficiente incluso con colas grandes.
+    *   Actúa como un **buffer**, desacoplando la recepción (rápida) del procesamiento (lento, llamada a IA), protegiendo el sistema de saturación.
 
-```mermaid
-classDiagram
-    class SistemaIris {
-        +registrarAsignatura()
-        +inscribirAlumno()
-        +recibirMensaje()
-        +procesarMensajes()
-    }
+### C. Suscripción de Alumnos (Difusión)
+*   **Estructura**: Lista Enlazada Simple (con comportamiento de Conjunto/Set).
+*   **Decisión**: Un mensaje procesado debe enviarse a todos los alumnos suscritos.
+*   **Justificación**:
+    *   **Envío (Fan-out)**: Para enviar notificaciones, debemos recorrer *toda* la lista secuencialmente. La lista enlazada es óptima para recorridos completos O(K).
+    *   **Unicidad**: Se implementa una validación lógica al insertar para evitar duplicados (Set), asegurando que un alumno no reciba el mismo mensaje dos veces.
+    *   **Flexibilidad**: Facilita la eliminación de alumnos (bajas) re-enlazando punteros sin necesidad de mover bloques de memoria contigua como en un Array.
 
-    class ArbolAsignaturas {
-        +insertar(Asignatura)
-        +buscar(codigo): Asignatura
-    }
+## 3. Análisis de Complejidad (Big O)
+El diseño garantiza la escalabilidad del sistema:
 
-    class NodoArbol {
-        +Asignatura dato
-        +NodoArbol izquierdo
-        +NodoArbol derecho
-    }
+| Operación | Estructura | Complejidad Temporal |
+| :--- | :--- | :--- |
+| **Buscar Asignatura** | BST | **O(log N)** |
+| **Encolar Mensaje** | Heap (Priority Queue) | **O(log M)** |
+| **Obtener Mensaje Urgente** | Heap | **O(1)** (acceso) / O(log M) (extracción) |
+| **Suscribir Alumno** | Lista (con chequeo) | **O(K)** (verificar duplicado) |
+| **Notificar (Fan-out)** | Lista | **O(K)** (siendo K = num suscriptores) |
 
-    class Asignatura {
-        -String codigo
-        -String nombre
-        +recibirMensaje(Mensaje)
-        +agregarSuscriptor(Alumno)
-    }
+> *N = Total Asignaturas, M = Mensajes en cola, K = Suscriptores por asignatura.*
 
-    class ColaMensajes {
-        +encolar(Mensaje)
-        +desencolar(): Mensaje
-        -heapify()
-    }
+## 4. Diagramas de Referencia
+El diseño visual se encuentra detallado en la carpeta `uml/` (o `documentosUML/` según configuración):
+*   **Diagrama de Clases**: Muestra la composición de `SistemaIris` con `ArbolAsignaturas`, `ColaMensajes` y `ListaAlumnos`.
+*   **Diagrama de Flujo**: Ilustra el viaje del dato desde la entrada, pasando por el filtrado del Árbol, la espera en la Cola, hasta la difusión por la Lista.
 
-    class Mensaje {
-        -String contenido
-        -int prioridad
-        -long timestamp
-        +compareTo(Mensaje)
-    }
-
-    class ListaSuscriptores {
-        +insertar(Alumno)
-        +eliminar(id)
-        +iterar()
-    }
-
-    class NodoAlumno {
-        +Alumno dato
-        +NodoAlumno siguiente
-    }
-
-    class Alumno {
-        -String id
-        -String nombre
-        -String contacto
-    }
-
-    SistemaIris --> ArbolAsignaturas : usa
-    ArbolAsignaturas *-- NodoArbol : contiene
-    NodoArbol --> Asignatura : referencias
-    Asignatura *-- ColaMensajes : tiene
-    Asignatura *-- ListaSuscriptores : tiene
-    ColaMensajes o-- Mensaje : prioriza
-    ListaSuscriptores *-- NodoAlumno : enlaza
-    NodoAlumno --> Alumno : referencias
-```
-
-### Diagrama de Flujo de Datos
-
-```mermaid
-graph TD
-    Input[Entrada Mensaje] -->|Extraer Código| Iris{Sistema Iris}
-    Iris -->|Buscar Asignatura (BST, O log N)| Asig[Nodo Asignatura]
-    
-    subgraph Asignatura Node
-        Asig -->|Encolar| PQ[Cola de Prioridad (Heap)]
-        PQ -->|Desencolar (Mayor Prio)| Proc[Procesador IA]
-    end
-    
-    Proc -->|Resumen| Notif[Notificador]
-    Notif -->|Iterar Suscriptores (Lista)| Subs[Lista Enlazada Alumnos]
-    Subs -->|Fan-out| WA[API WhatsApp]
-```
-
-## 2. Justificación de las Estructuras
-
-| Operación | Estructura Elegida | Justificación | Eficiencia (Big O) |
-|-----------|--------------------|---------------|-------------------|
-| **Identificar Asignatura** | **Árbol Binario de Búsqueda (BST)** | Permite buscar asignaturas por código más rápido que una lista secuencial. Mantiene el orden alfabético. | **O(log N)** (promedio) |
-| **Gestionar Suscripciones** | **Lista Enlazada (con validación Set)** | Garantiza unicidad al insertar (previo chequeo) y permite recorrer secuencialmente para el envío masivo. | **O(1)** insert/delete (si tenemos ref) / **O(N)** scan |
-| **Cola de Mensajes** | **Cola de Prioridad (Max-Heap)** | Asegura que los mensajes urgentes se procesen antes, independientemente del orden de llegada. Desacopla recepción de envío. | **O(log M)** encolar/desencolar |
-| **Envío Masivo** | **Lista Enlazada** | Optimiza el recorrido secuencial necesario para notificar a todos los alumnos uno por uno. | **O(K)** iteración total |
-
-## 3. Compromisos y Trade-offs
-
-1.  **Consumo de Memoria vs Rapidez**: Usamos estructuras de nodos (BST, Listas) que consumen más RAM por punteros, aceptable dado el volumen (<1000 asignaturas).
-2.  **Latencia**: Las colas introducen un retraso intencional para evitar saturar la API de WhatsApp ("Aplanamiento de curva de tráfico").
-3.  **Complejidad**: Mantener un Árbol y Heaps es más complejo que usar Arrays simples, pero escala mejor bajo carga.
-
-## 4. Casos Límite
-
-- **Asignatura Desconocida**: Si el BST devuelve `null`, el mensaje se loguea como "No categorizado" y se descarta.
-- **Sin Suscriptores**: Si la lista está vacía, el proceso se detiene antes de llamar a la IA, ahorrando costes.
-- **Bajas (Borrado)**: Al darse de baja, se busca en la lista enlazada (O(K)) y se elimina el nodo.
-- **Empate de Prioridad**: El Heap utiliza el `timestamp` como criterio de desempate (FIFO para misma prioridad).
+## 5. Compromisos Asumidos
+*   **Latencia Intencional**: Aceptamos que los mensajes de baja prioridad esperen en la cola si hay urgencias, para garantizar la calidad del servicio (QoS).
+*   **Consumo de Memoria**: El uso de nodos enlazados (en el BST y Listas) implica un *overhead* de memoria por los punteros, el cual es despreciable dada la capacidad de hardware actual frente al volumen de datos esperado (< 1000 asignaturas).
