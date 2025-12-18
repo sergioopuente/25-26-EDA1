@@ -1,4 +1,4 @@
-# Refactorización del Examen Parcial
+# Refactorización del Examen Parcial (Array --> Lista)
 
 En el examen parcial implementamos una lista con un array con la utilización de una clase `Nodo`. Al refactorizar este ejercicio hemos eliminado esa clase ya que estaba mal implementado. La nueva versión utiliza un almacenamiento contiguo (un array interno de enteros) para gestionar los datos de forma directa y rápida.
 

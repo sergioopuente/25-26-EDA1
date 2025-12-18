@@ -1,30 +1,29 @@
-
-
 public class Array {
-    private Lista miLista;
+    private Lista lista;
     private int capacidad;
 
     public Array(int capacidad) {
-        assert capacidad > 0 : "Mal:la capacidad debe ser positiva";
+        assert capacidad > 0 : "Mal: la capacidad debe ser positiva";
 
         this.capacidad = capacidad;
-        this.miLista = new Lista();
+        this.lista = new Lista();
 
+        
         for (int i = 0; i < capacidad; i++) {
-            miLista.agregar(0);
+            lista.agregar(0);
         }
     }
 
     public int get(int indice) {
-        assert indice >= 0 && indice < capacidad
-                : "Mal: el índice esta fuera de rango";
-        return miLista.obtener(indice);
+        assert indice >= 0 && indice < capacidad 
+               : "Mal: el índice está fuera de rango";
+        return lista.obtener(indice);
     }
 
     public void set(int indice, int valor) {
-        assert indice >= 0 && indice < capacidad
-                : "Mal: el índice esta fuera de rango";
-        miLista.modificar(indice, valor);
+        assert indice >= 0 && indice < capacidad 
+               : "Mal: el índice está fuera de rango";
+        lista.modificar(indice, valor);
     }
 
     public int longitud() {
