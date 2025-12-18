@@ -8,12 +8,12 @@ En el examen parcial implementamos una lista con un array con la utilización de
 
 A continuación, explico la lógica que sigue el proyecto para cumplir con los requisitos:
 
-### 1. El Motor Interno (Clase `Lista`)
+### 1. Clase `Lista`
 Esta es la parte que "trabaja" por debajo. Al haber eliminado los nodos, esta clase ahora gestiona un espacio de memoria simple para guardar números enteros.
 * Su función es almacenar los datos reales.
 * Permite acceder directamente a una posición concreta sin tener que recorrer las anteriores (acceso directo).
 
-### 2. La Cara Visible (Clase `Array`)
+### 2. Clase `Array`
 Esta es la clase que usa el "Cliente". Actúa como un intermediario o controlador.
 * Su función principal es **poner límites**. Aunque la lista interna podría crecer, esta clase se asegura de que el tamaño se mantenga fijo, tal y como se comporta un array real.
 * Protege los datos: verifica que nadie intente leer o escribir fuera de las posiciones permitidas.
