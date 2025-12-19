@@ -1,0 +1,16 @@
+@startuml
+class Array {
+    - int[] datos
+    - int capacidad
+    + Array(int capacidad)
+    + int get(int indice)
+    + void set(int indice, int valor)
+    + int longitud()
+}
+
+class Cliente {
+    + {static} void main(String[] args)
+}
+
+Cliente ..> Array : usa
+@enduml
