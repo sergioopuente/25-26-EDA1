@@ -1,6 +1,7 @@
-package ExamenParcial;
+
 
 public class Cliente {
+    
     
     private static final int CAPACIDAD_INICIAL = 4;
     private static final int VALOR_A = 10;
@@ -42,6 +43,6 @@ public class Cliente {
         }
     }
 }
-    }
 }
+
 
