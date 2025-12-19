@@ -1,16 +1,30 @@
 @startuml
+title Diagrama de Clases - Refactorización Array
+
+skinparam class {
+    BackgroundColor White
+    ArrowColor Black
+    BorderColor Black
+}
+
 class Array {
     - int[] datos
     - int capacidad
+    --
     + Array(int capacidad)
     + int get(int indice)
     + void set(int indice, int valor)
     + int longitud()
 }
+note right of Array
+  Refactorizado para usar int[] nativo.
+  Acceso y modificación en O(1).
+end note
 
 class Cliente {
+    --
     + {static} void main(String[] args)
 }
 
-Cliente ..> Array : usa
+Cliente ..> Array : <<usa>>
 @enduml
