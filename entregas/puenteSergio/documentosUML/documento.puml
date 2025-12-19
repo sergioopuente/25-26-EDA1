@@ -1,0 +1,45 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class "Cliente" {
+    +main(args: String[]): void
+}
+
+class "Array<T>" {
+    -miLista: Lista<T>
+    -capacidad: int
+    +Array(capacidad: int)
+    +get(indice: int): T
+    +set(indice: int, valor: T): void
+    +longitud(): int
+    -validarIndice(indice: int): void
+}
+
+class "Lista<T>" {
+    -cabeza: Nodo<T>
+    -tamano: int
+    +Lista()
+    +agregar(valor: T): void
+    +obtener(indice: int): T
+    +modificar(indice: int, nuevoValor: T): void
+    +tamano(): int
+    +estaVacia(): boolean
+    -validarIndice(indice: int): void
+}
+
+class "Nodo<T>" {
+    -dato: T
+    -siguiente: Nodo<T>
+    +Nodo(dato: T)
+    +getDato(): T
+    +setDato(dato: T): void
+    +getSiguiente(): Nodo<T>
+    +setSiguiente(siguiente: Nodo<T>): void
+}
+
+Cliente ..> Array : usa
+Array *-- Lista : compone
+Lista *-- Nodo : compone
+Nodo o-- Nodo : referencía
+
+@enduml
