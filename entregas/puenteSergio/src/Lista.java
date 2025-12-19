@@ -1,60 +1,76 @@
 package ExamenParcial;
 
-public class Lista<T> {
-    private Nodo<T> cabeza;
-    private int tamano;
+public class Lista {
+
+
+    private class Nodo {
+        private int dato;
+        private Nodo siguiente;
+
+        public Nodo(int dato) {
+            this.dato = dato;
+            this.siguiente = null;
+        }
+   
+        public int getDato() { return dato; }
+        public void setDato(int dato) { this.dato = dato; }
+        public Nodo getSiguiente() { return siguiente; }
+        public void setSiguiente(Nodo siguiente) { this.siguiente = siguiente; }
+    }
+
+
+    private Nodo cabeza;
+    private int tamaño;
 
     public Lista() {
         this.cabeza = null;
-        this.tamano = 0;
+        this.tamaño = 0;
     }
 
-    public void agregar(T valor) {
-        Nodo<T> nuevo = new Nodo<>(valor);
+    public void agregar(int valor) {
+        Nodo nuevo = new Nodo(valor);
+        insertarAlFinal(nuevo);
+        tamaño++;
+    }
 
+    private void insertarAlFinal(Nodo nuevo) {
         if (cabeza == null) {
             cabeza = nuevo;
         } else {
-            Nodo<T> actual = cabeza;
-            while (actual.getSiguiente() != null) {
-                actual = actual.getSiguiente();
-            }
-            actual.setSiguiente(nuevo);
+            buscarUltimo().setSiguiente(nuevo);
         }
-        tamano++;
     }
 
-    public T obtener(int indice) {
-        validarIndice(indice);
+    private Nodo buscarUltimo() {
+        Nodo actual = cabeza;
+        while (actual.getSiguiente() != null) {
+            actual = actual.getSiguiente();
+        }
+        return actual;
+    }
 
-        Nodo<T> actual = cabeza;
+    public int obtener(int indice) {
+        validarRango(indice);
+        return buscarNodo(indice).getDato();
+    }
+
+    public void modificar(int indice, int valor) {
+        validarRango(indice);
+        buscarNodo(indice).setDato(valor);
+    }
+
+    private Nodo buscarNodo(int indice) {
+        Nodo actual = cabeza;
         for (int i = 0; i < indice; i++) {
             actual = actual.getSiguiente();
         }
-        return actual.getDato();
+        return actual;
     }
 
-    public void modificar(int indice, T nuevoValor) {
-        validarIndice(indice);
-
-        Nodo<T> actual = cabeza;
-        for (int i = 0; i < indice; i++) {
-            actual = actual.getSiguiente();
-        }
-        actual.setDato(nuevoValor);
-    }
-
-    public int tamano() {
-        return tamano;
-    }
-
-    public boolean estaVacia() {
-        return tamano == 0;
-    }
-
-    private void validarIndice(int indice) {
-        if (indice < 0 || indice >= tamano) {
-            throw new IndexOutOfBoundsException("Índice fuera de rango: " + indice + ", Tamaño: " + tamano);
-        }
+    private void validarRango(int indice) {
+        assert indice >= 0 && indice < tamaño : "Índice de lista fuera de rango";
     }
 }
+    }
+}
+
