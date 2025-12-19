@@ -1,39 +1,26 @@
-# EDA I
+# Reto 007: Refactorización del Examen Parcial
 
-Repo de materiales y proyectos de la asignatura **Estructura de datos y algoritmos I** del [Grado de Ingeniería Informática](https://www.uneatlantico.es/escuela-politecnica-superior/estudios-grado-oficial-en-ingenieria-informatica) la [Universidad Europea del Atlántico](https://www.uneatlantico.es).
+Este directorio contiene la solución al Refactorización del código del examen parcial de EDA1.
 
-## Curso *[25][26]*
+## Objetivos
+Refactorizar la implementación de `Array`, `Lista`, y `Nodo` para cumplir con principios de código limpio y robusto, manteniendo la restricción de que `Array` debe basarse en `Lista`.
 
-- [Temario](https://github.com/mmasias/EDA1/blob/main/README.md)
-  - [A día de hoy, deberíamos saber...](temario/aDiaDeHoy.md)
-  - [Casos de uso](temario/casosDeUso/README.md)
-  - [Ejercicios](temario/ejercicios/README.md)
-- Evaluaciones
-  - Evaluación continua: [Retos!](evaluaciones/retos/README.md)
-  - Exámenes
-    - Parcial: [Enunciado](evaluaciones/examenes/examenParcial/README.md) | Repositorio de trabajo y entrega.
-    - Final: [Enunciado](evaluaciones/examenes/examenFinal/README.md) | Repositorio de trabajo y entrega.
-    - Extraordinario: [Enunciado](evaluaciones/examenes/examenExtraordinario/README.md) | Repositorio de trabajo y entrega.
+## Cambios Implementados
 
-> ***NOTA:*** Los repositorios de entrega de exámenes estarán disponible días antes del examen. El repositorio con el enunciado del examen se activa al inicio del examen y permitirá entregas hasta la finalización del mismo.
+### 1. Genéricos (`<T>`)
+Se han introducido tipos genéricos en todas las clases (`Array<T>`, `Lista<T>`, `Nodo<T>`) para permitir reutilizar las estructuras de datos con cualquier tipo de objeto (no solo `int`).
 
-## Herramientas et al
+### 2. Manejo de Excepciones
+- Se reemplazaron los `assert` por excepciones estándar (`IndexOutOfBoundsException`, `IllegalArgumentException`).
+- Esto mejora la robustez.
 
-- [GIT](https://git-scm.com/) & [GitHub](https://github.com/)
-- [Visual Studio Code](https://code.visualstudio.com/)
-- [PlantText](https://www.planttext.com/), para usar el formato [PlantUML](https://plantuml.com/es/) al realizar diagramas de:
-  - [actividades](https://plantuml.com/es/activity-diagram-beta)
-  - [estados](https://plantuml.com/es/state-diagram)
-  - [clases](https://plantuml.com/es/class-diagram)
-  - [objetos](https://plantuml.com/es/object-diagram)
-  - [y otros...](https://plantuml.com/es/sitemap-language-specification)
-- [Google Docs](https://drive.google.com/drive/u/0/my-drive)
-- [Plantillas](/documentos/plantillas.md)
+### 3. Código Limpio en `src/ExamenParcial`
+- El código final se encuentra en el paquete `ExamenParcial`.
+- Se han eliminado comentarios innecesarios.
 
-## Bibliografía & enlaces interesantes
+## Ejecución
+```bash
+javac -d bin src/ExamenParcial/*.java
+java -cp bin ExamenParcial.Cliente
+```
 
-NOTA: *Algunos enlaces podrían requerir **credenciales de acceso al campus** o a otros espacios colaborativos.*
-
-- Hoja de asistencia et-al
-- Libro de la asignatura
-- Este repo, versión de ediciones pasadas
