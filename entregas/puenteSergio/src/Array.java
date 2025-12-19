@@ -1,4 +1,4 @@
-package ExamenParcial;
+
 
 public class Array<T> {
     private Lista<T> miLista;
@@ -37,3 +37,4 @@ public class Array<T> {
         }
     }
 }
+
