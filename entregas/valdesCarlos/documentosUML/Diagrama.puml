@@ -1,29 +1,43 @@
 @startuml
 skinparam classAttributeIconSize 0
+hide circle
 
 class Cliente {
-    + main(args: String[]): void
+  - {static} CAPACIDAD : int
+  - {static} VALOR_A : int
+  - {static} VALOR_MODIFICADO : int
+  + {static} main(args : String[]) : void
+  - {static} ejecutarPrueba() : void
+  - {static} mostrarEstado(array : Array, mensaje : String) : void
 }
 
 class Array {
-    - capacidad: int
-    + Array(capacidad: int)
-    + get(indice: int): int
-    + set(indice: int, valor: int): void
-    + longitud(): int
+  - lista : Lista
+  - capacidad : int
+  + Array(capacidad : int)
+  + set(indice : int, valor : int) : void
+  + get(indice : int) : int
+  + longitud() : int
+  - validarIndice(indice : int) : void
 }
 
 class Lista {
-    - datos: int[]
-    - tamaño: int
-    + Lista()
-    + agregar(valor: int): void
-    + obtener(indice: int): int
-    + modificar(indice: int, valor: int): void
-    + tamaño(): int
-    - redimensionar(): void
+  - cabeza : Nodo
+  - tamaño : int
+  + agregar(valor : int) : void
+  + obtener(indice : int) : int
+  + modificar(indice : int, valor : int) : void
+  - buscarNodo(indice : int) : Nodo
 }
 
-Cliente .right.> Array : <<usa>>
-Array *-- Lista : - lista
+class "Lista.Nodo" as Nodo << (I,orchid) Inner Class >> {
+  - dato : int
+  - siguiente : Nodo
+  + Nodo(dato : int)
+}
+
+Cliente ..> Array : usa
+Array *-- Lista : compone
+Lista +-- Nodo : contiene (interna)
+
 @enduml
